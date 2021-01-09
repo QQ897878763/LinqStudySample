@@ -141,6 +141,27 @@ namespace DepartmentLinqSample
                 TelPhone = "0731-6222222",
                 EmployeeNumber = 7
             });
+
+
+            // 这里如果DepartmentDto为引用类型(class)则需要使用比较器DepartmentEqualityComparer才能返回我们的预期值(根据ID值判断是否相等)
+            List<DepartmentDto> diffList = lstDepartItemsCPs.Except(lstDepartItems, new DepartmentEqualityComparer()).ToList();
+            // 获取相等元素
+            List<DepartmentDto> diffList1 = lstDepartItemsCPs.Intersect(lstDepartItems.Select(p => p), new DepartmentEqualityComparer()).ToList();
+            // 需要添加IEqualityComparer，因为集合内的内容为引用类型！所以两个集合的“值”是不同的，引用类型的值在这里还包含了指向的内存堆的引用地址
+            bool isEqual = lstDepartItems.SequenceEqual(InitDepartmentData(), new DepartmentEqualityComparer());
+
+
+
+
+
+
+
+
+
+
+
+
+
             // 这里如果DepartmentDto为引用类型(class)则需要使用比较器DepartmentEqualityComparer才能返回我们的预期值(根据ID值判断是否相等)
             List<DepartmentDto> diffList = lstDepartItemsCPs.Except(lstDepartItems, new DepartmentEqualityComparer()).ToList();
             // 获取相等元素
